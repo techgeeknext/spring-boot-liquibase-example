@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+  xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+  <changeSet id="01" author="techgeeknext">
+    <createTable tableName="company"
+      remarks="Company Data">
+      <column name="id" type="int" autoIncrement="true">
+        <constraints nullable="false" unique="true" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(255)">
+        <constraints nullable="false" unique="true"/>
+      </column>
+      <column name="employee" type="int">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <!-- for manual rollback
+    <rollback>
+      <dropTable tableName="company"/>
+    </rollback>
+    -->
+
+    <createTable tableName="employees"
+      remarks="Employees Data">
+      <column name="id" type="int" autoIncrement="true">
+        <constraints nullable="false" primaryKey="true"/>
+      </column>
+      <column name="name" type="varchar(100)">
+        <constraints nullable="false"/>
+      </column>
+    </createTable>
+
+    <addForeignKeyConstraint baseTableName="company" baseColumnNames="employee"
+      constraintName="employee_fk"
+      referencedTableName="employees" referencedColumnNames="id"/>
+  </changeSet>
+</databaseChangeLog>
